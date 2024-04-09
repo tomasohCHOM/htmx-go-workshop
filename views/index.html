@@ -1,3 +1,4 @@
+{{ block "index" . }}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -6,6 +7,7 @@
     <title>HTMX + Go TO-DO App</title>
   </head>
   <body>
-    Hello, World
+    Count {{ .Count }}
   </body>
 </html>
+{{ end }}
