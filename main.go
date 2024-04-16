@@ -22,17 +22,18 @@ type Count struct {
 }
 
 type Response struct {
-	Name    string    `json:"name"`
-	Pokemon []Pokemon `json:"pokemon_entries"`
+	PokemonData []PokemonData `json:"results"`
+}
+
+type PokemonData struct {
+	Name string `json:"name"`
+	Url  string `json:"url"`
 }
 
 type Pokemon struct {
-	EntryNumber int            `json:"entry_number"`
-	Species     PokemonSpecies `json:"pokemon_species"`
-}
-
-type PokemonSpecies struct {
-	Name string `json:"name"`
+	Id     int    `json:"id"`
+	Name   string `json:"name"`
+	Weight int    `json:"weight"`
 }
 
 func (t *Templates) Render(w io.Writer, name string, data interface{}, c echo.Context) error {
@@ -52,6 +53,7 @@ func main() {
 
 	count := Count{Count: 69}
 
+	// GET endpoint to get a list of pokemon with limit = 20
 	e.GET("/", func(c echo.Context) error {
 		res, err := http.Get("https://pokeapi.co/api/v2/pokemon?limit=20")
 		if err != nil {
@@ -63,18 +65,17 @@ func main() {
 			log.Fatal(err)
 		}
 
-		fmt.Println(string(resData))
 		var resObject Response
 		json.Unmarshal(resData, &resObject)
+		fmt.Println(resObject)
 
-		// fmt.Println(resObject.Name)
-		// fmt.Println(resObject.Pokemon)
 		return c.Render(http.StatusOK, "index.html", count)
 	})
 
+	// GET endpoint to get a specific pokemon based on their id number
 	e.GET("/pokemon/:id", func(c echo.Context) error {
 		pokemonNumber := c.Param("id")
-		url := fmt.Sprintf("https://pokeapi.co/api/v2/pokemon/kanto/%s", pokemonNumber)
+		url := fmt.Sprintf("https://pokeapi.co/api/v2/pokemon/%s", pokemonNumber)
 		res, err := http.Get(url)
 		if err != nil {
 			fmt.Print(err.Error())
@@ -84,7 +85,11 @@ func main() {
 		if err != nil {
 			log.Fatal(err)
 		}
-		fmt.Printf(string(resData))
+
+		var resObject Pokemon
+		json.Unmarshal(resData, &resObject)
+		fmt.Println(resObject)
+
 		return c.Render(http.StatusOK, "index.html", count)
 	})
 
