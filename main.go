@@ -17,10 +17,6 @@ type Templates struct {
 	templates *template.Template
 }
 
-type Count struct {
-	Count int
-}
-
 type Response struct {
 	PokemonData []PokemonData `json:"results"`
 }
@@ -67,7 +63,7 @@ func main() {
 		json.Unmarshal(resData, &resObject)
 		fmt.Println(resObject)
 
-		return c.Render(http.StatusOK, "index.html", count)
+		return c.Render(http.StatusOK, "index.html", resObject)
 	})
 
 	// GET endpoint to get a specific pokemon based on their id number
@@ -88,7 +84,7 @@ func main() {
 		json.Unmarshal(resData, &resObject)
 		fmt.Println(resObject)
 
-		return c.Render(http.StatusOK, "index.html", count)
+		return c.Render(http.StatusOK, "index.html", resObject)
 	})
 
 	e.Logger.Fatal(e.Start(":3000"))

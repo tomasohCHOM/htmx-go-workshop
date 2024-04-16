@@ -1,9 +1,10 @@
+{{ block "index" . }}
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="css" href="unpkg.com/normalize.css/">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" type="css" href="unpkg.com/normalize.css/" />
     <title>PokeMX</title>
   </head>
   <body>
@@ -12,36 +13,21 @@
       <div class="search-bar">
         <form hx-post="/search" hx-target="entries">
           <input type="search" name="search" />
-          <input class="search-button" type="submit" name="submit" value="Go">
+          <input class="search-button" type="submit" name="submit" value="Go" />
         </form>
       </div>
     </header>
     <main>
       <div id="entries">
+        {{ range .PokemonData }}
         <div class="entry">
-          <h3>Pikachu</h3>
-          <img src="https://assets.pokemon.com/assets/cms2/img/pokedex/full/025.png" alt="Pikachu" />
+          <h3>{{ .Name }}</h3>
+          <img
+            src="https://assets.pokemon.com/assets/cms2/img/pokedex/full/025.png"
+            alt="Pikachu"
+          />
         </div>
-        <div class="entry">
-          <h3>Pikachi (big)</h3>
-          <img src="https://www.pockettactics.com/wp-content/sites/pockettactics/2023/06/big-pokemon-3.jpeg" alt="Pikachu" />
-        </div>
-        <div class="entry">
-          <h3>Pokemon name</h3>
-          <img src="https://assets.pokemon.com/assets/cms2/img/pokedex/full/025.png" alt="Pikachu" />
-        </div>
-        <div class="entry">
-          <h3>Pokemon name</h3>
-          <img src="https://assets.pokemon.com/assets/cms2/img/pokedex/full/025.png" alt="Pikachu" />
-        </div>
-        <div class="entry">
-          <h3>Pokemon name</h3>
-          <img src="https://assets.pokemon.com/assets/cms2/img/pokedex/full/025.png" alt="Pikachu" />
-        </div>
-        <div class="entry">
-          <h3>Pokemon name</h3>
-          <img src="https://assets.pokemon.com/assets/cms2/img/pokedex/full/025.png" alt="Pikachu" />
-        </div>
+        {{ end }}
       </div>
     </main>
   </body>
@@ -49,7 +35,7 @@
     body {
       margin: 0;
       padding: 0;
-      font-family: 'Roboto', sans-serif;
+      font-family: "Roboto", sans-serif;
       background-color: #222;
       color: #003049;
       font-weight: 750;
@@ -131,3 +117,4 @@
     }
   </style>
 </html>
+{{ end }}
