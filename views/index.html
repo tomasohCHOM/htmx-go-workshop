@@ -1,6 +1,133 @@
-{{ define "content"}}
-<h1>Pokedex</h1>
-<div>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="css" href="unpkg.com/normalize.css/">
+    <title>Go + HTMX Pokedex App</title>
+  </head>
+  <body>
+    <header>
+      <h1>Pokedex</h1>
+      <div class="search-bar">
+        <form hx-post="/search" hx-target="entries">
+          <input type="search" name="search" />
+          <input class="search-button" type="submit" name="submit" value="Go">
+        </form>
+      </div>
+    </header>
+    <main>
+      <div id="entries">
+        <div class="entry">
+          <h3>Pikachu</h3>
+          <img src="https://assets.pokemon.com/assets/cms2/img/pokedex/full/025.png" alt="Pikachu" />
+        </div>
+        <div class="entry">
+          <h3>Pikachi (big)</h3>
+          <img src="https://www.pockettactics.com/wp-content/sites/pockettactics/2023/06/big-pokemon-3.jpeg" alt="Pikachu" />
+        </div>
+        <div class="entry">
+          <h3>Pokemon name</h3>
+          <img src="https://assets.pokemon.com/assets/cms2/img/pokedex/full/025.png" alt="Pikachu" />
+        </div>
+        <div class="entry">
+          <h3>Pokemon name</h3>
+          <img src="https://assets.pokemon.com/assets/cms2/img/pokedex/full/025.png" alt="Pikachu" />
+        </div>
+        <div class="entry">
+          <h3>Pokemon name</h3>
+          <img src="https://assets.pokemon.com/assets/cms2/img/pokedex/full/025.png" alt="Pikachu" />
+        </div>
+        <div class="entry">
+          <h3>Pokemon name</h3>
+          <img src="https://assets.pokemon.com/assets/cms2/img/pokedex/full/025.png" alt="Pikachu" />
+        </div>
+      </div>
+    </main>
+  </body>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Roboto', sans-serif;
+      background-color: #222;
+      color: #003049;
+      font-weight: 750;
+    }
 
-</div>
-{{ end}}
+    header {
+      min-width: 100%;
+      display: flex;
+      justify-content: space-between;
+      padding: 1rem;
+      border-bottom-left-radius: 1.5rem;
+      border-bottom-right-radius: 1.5rem;
+      margin-bottom: 1rem;
+      background-color: #c1121f;
+      color: #fdf0d5;
+      font-weight: 900;
+    }
+
+    .search-bar {
+      display: inline-block;
+      height: 3rem;
+    }
+
+    .search-bar input {
+      height: 2rem;
+      margin: 2rem 0.5rem;
+    }
+
+    .search-button {
+      font-weight: 700;
+      color: #fdf0d5;
+      border-radius: 5%;
+      width: 6rem;
+      background-color: orange;
+      border: none;
+      transition: ease 200ms;
+    }
+
+    .search-button:hover {
+      background-color: yellow;
+      color: black;
+    }
+
+    main {
+      display: flex;
+      width: 100%;
+      height: 100hv;
+      padding: 0.5rem;
+      justify-content: center;
+      align-items: center;
+      overflow-y: hidden;
+    }
+
+    #entries {
+      display: flex;
+      flex-wrap: wrap;
+      width: 100%;
+      align-items: center;
+      justify-content: space-evenly;
+    }
+
+    .entry {
+      display: flex;
+      margin: 1rem 0.5rem;
+      flex-direction: column;
+      background-color: orange;
+      padding: 1rem;
+      align-items: center;
+      justify-content: center;
+      border-radius: 1rem;
+      min-width: 22rem;
+      min-height: 22rem;
+      color: #fdf0d5;
+    }
+
+    .entry img {
+      max-height: 16rem;
+      aspect-ratio: 1/1;
+    }
+  </style>
+</html>

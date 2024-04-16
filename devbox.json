@@ -1,6 +1,10 @@
 {
   "$schema":  "https://raw.githubusercontent.com/jetpack-io/devbox/0.10.1/.schema/devbox.schema.json",
   "packages": ["go@latest"],
+  "env": {
+    "GOPATH": "$PWD",
+    "PATH": "$PATH:$PWD/bin"
+  },
   "shell": {
     "init_hook": [
       "echo 'Welcome to devbox!' > /dev/null"

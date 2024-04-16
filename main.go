@@ -32,10 +32,14 @@ func main() {
 	e.Use(middleware.Logger())
 	e.Renderer = newTemplate()
 
-	count := Count{Count: 69}
+  data := struct {
+    Entries []string
+  }{
+    Entries: []string{},
+  }
 
 	e.GET("/", func(c echo.Context) error {
-		return c.Render(http.StatusOK, "index.html", count)
+		return c.Render(http.StatusOK, "index.html", data)
 	})
 
 	e.Logger.Fatal(e.Start(":3000"))
