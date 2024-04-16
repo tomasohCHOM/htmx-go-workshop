@@ -51,8 +51,6 @@ func main() {
 	e.Use(middleware.Logger())
 	e.Renderer = newTemplate()
 
-	count := Count{Count: 69}
-
 	// GET endpoint to get a list of pokemon with limit = 20
 	e.GET("/", func(c echo.Context) error {
 		res, err := http.Get("https://pokeapi.co/api/v2/pokemon?limit=20")
