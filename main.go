@@ -35,11 +35,10 @@ func main() {
 
 	// GET endpoint to get a list of Pokemon.
 	e.GET("/pokemon", func(c echo.Context) error {
-
 		return c.Render(http.StatusOK, "index.html", pokedex.GetPokedex())
 	})
 
-	// GET endpoint to get a specific pokemon based on their id number
+	// GET endpoint to get a specific pokemon based on their pokedex number.
 	e.GET("/pokemon/:id", func(c echo.Context) error {
 		pokedexNumberString := c.Param("id")
 		pokedexNumber, err := strconv.Atoi(pokedexNumberString)
@@ -53,6 +52,7 @@ func main() {
 			fmt.Print(err.Error())
 			os.Exit(1)
 		}
+
 		return c.Render(http.StatusOK, "index.html", entry)
 	})
 
