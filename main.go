@@ -34,7 +34,7 @@ func main() {
 	e.Renderer = newTemplate()
 
 	// GET endpoint to get a list of Pokemon.
-	e.GET("/pokemon", func(c echo.Context) error {
+	e.GET("/", func(c echo.Context) error {
 		return c.Render(http.StatusOK, "index.html", pokedex.GetPokedex())
 	})
 
