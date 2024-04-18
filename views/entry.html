@@ -16,8 +16,7 @@
       </h1>
     </header>
     <main>
-      {{ .EntryNumber }}
-      <!-- <h1>Pokemon {{ .PokemonEntry.EntryNumber }}{{ .PokemnoEntry.PokemonSpecies.Name }}</h1> -->
+      <h1>Pokemon {{ .EntryNumber }}{{ .PokemonSpecies.Name }}</h1>
       <img src="https://assets.pokemon.com/assets/cms2/img/pokedex/full/{{printf "%03d" .EntryNumber }}.png" alt="{{ .PokemonSpecies.Name }}" />
     </main>
     <style>
