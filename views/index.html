@@ -5,7 +5,6 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="stylesheet" type="css" href="unpkg.com/normalize.css/" />
   <script src="https://unpkg.com/htmx.org@1.9.12"
     integrity="sha384-ujb1lZYygJmzgSwoxRggbCHcjc0rB2XoQrxeTUQyRjrOnlCoYta87iKBWq3EsdM2"
     crossorigin="anonymous"></script>
@@ -25,11 +24,12 @@
   <main>
     <div id="entries">
       {{ range .PokemonEntries }}
-      <div class="entry">
-        <h3>{{ .PokemonSpecies.Name }}</h3>
-        <img src="https://assets.pokemon.com/assets/cms2/img/pokedex/full/{{
-        printf " %03d" .EntryNumber }}.png" alt="{{ .PokemonSpecies.Name }}" />
-      </div>
+        <a href="/pokemon/{{ printf "%d" .EntryNumber }}">
+          <div class="entry">
+            <h3>{{ .PokemonSpecies.Name }}</h3>    
+            <img src="https://assets.pokemon.com/assets/cms2/img/pokedex/full/{{printf "%03d" .EntryNumber }}.png" alt="{{ .PokemonSpecies.Name }}" />
+          </div>
+        </a>
       {{ end }}
     </div>
   </main>
@@ -47,6 +47,9 @@
   h1 {
     margin: 0;
     font-size: 2.75rem;
+  }
+  a {
+    text-decoration: none;
   }
 
   *,
