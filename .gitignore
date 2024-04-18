@@ -1,4 +1,6 @@
-tmp
-bin
+/tmp
+/bin
 /pkg
 /node_modules/
+.air.toml
+.devbox

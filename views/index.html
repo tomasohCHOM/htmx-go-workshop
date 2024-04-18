@@ -1,139 +1,147 @@
 {{ block "index" . }}
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" type="css" href="unpkg.com/normalize.css/" />
-    <title>PokeMX</title>
-  </head>
-  <body>
-    <header>
-      <h1>Pokedex</h1>
-      <div class="search-bar">
-        <form hx-post="/search" hx-target="entries">
-          <input type="search" name="search" />
-          <input class="search-button" type="submit" name="submit" value="Go" />
-        </form>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" type="css" href="unpkg.com/normalize.css/" />
+  <script src="https://unpkg.com/htmx.org@1.9.12"
+    integrity="sha384-ujb1lZYygJmzgSwoxRggbCHcjc0rB2XoQrxeTUQyRjrOnlCoYta87iKBWq3EsdM2"
+    crossorigin="anonymous"></script>
+  <title>PokeMX</title>
+</head>
+
+<body>
+  <header>
+    <h1>Pokedex</h1>
+    <div class="search-bar">
+      <div class="form">
+        <input class="search-input" name="query" placeholder="Search for a Pokemon..." type="text" hx-get="/search"
+          hx-target="#entries" hx-trigger="keyup changed delay:500ms" />
       </div>
-    </header>
-    <main>
-      <div id="entries">
-        {{ range .PokemonEntries }}
-        <div class="entry">
-          <h3>{{ .PokemonSpecies.Name }}</h3>
-          <img src="https://assets.pokemon.com/assets/cms2/img/pokedex/full/{{
-          printf "%03d" .EntryNumber }}.png" alt="{{ .PokemonSpecies.Name }}" />
-        </div>
-        {{ end }}
+    </div>
+  </header>
+  <main>
+    <div id="entries">
+      {{ range .PokemonEntries }}
+      <div class="entry">
+        <h3>{{ .PokemonSpecies.Name }}</h3>
+        <img src="https://assets.pokemon.com/assets/cms2/img/pokedex/full/{{
+        printf " %03d" .EntryNumber }}.png" alt="{{ .PokemonSpecies.Name }}" />
       </div>
-    </main>
-  </body>
-  <style>
-    :root {
-      --color-primary: rgb(246, 246, 246);
-      --color-secondary: rgb(241, 242, 242);
-      --color-contrast: rgb(22, 62, 136);
-      --drop-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1),
-        0 2px 4px -2px rgb(0 0 0 / 0.1);
-    }
+      {{ end }}
+    </div>
+  </main>
+</body>
+<style>
+  :root {
+    --color-primary: rgba(82, 0, 0, 0.904);
+    --color-secondary: rgba(167, 15, 15, 0.747);
+    --color-cards: rgba(243, 243, 243, 0.2);
+    --color-contrast: rgb(255, 255, 255);
+    --drop-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1),
+      0 2px 4px -2px rgb(0 0 0 / 0.1);
+  }
 
-    h1 {
-      margin: 0;
-      font-size: 1.75rem;
-    }
+  h1 {
+    margin: 0;
+    font-size: 2.75rem;
+  }
 
-    *,
-    *::before,
-    *::after {
-      box-sizing: border-box;
-    }
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
 
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: "Roboto", sans-serif;
-      background-color: var(--color-primary);
-      color: #003049;
-      font-weight: 750;
-    }
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: "Roboto", sans-serif;
+    background-color: var(--color-primary);
+    color: #003049;
+    font-weight: 750;
+  }
 
-    header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 1rem 2rem;
-      /* border-radius: 0 0 0.5rem 0.5rem; */
-      margin-bottom: 1rem;
-      background-color: var(--color-secondary);
-      color: var(--color-contrast);
-      box-shadow: var(--drop-shadow);
-      font-weight: 900;
-    }
+  header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 2rem;
+    /* border-radius: 0 0 0.5rem 0.5rem; */
+    margin-bottom: 1rem;
+    background-color: var(--color-secondary);
+    color: var(--color-contrast);
+    box-shadow: var(--drop-shadow);
+    font-weight: 900;
+  }
 
-    .search-bar {
-      display: flex;
-      align-items: center;
-      height: 3rem;
-    }
+  .search-bar {
+    display: flex;
+    align-items: center;
+    height: 3rem;
+  }
 
-    .search-bar input {
-      outline: none;
-      border: none;
-      border-radius: 1rem;
-      padding: 0.5rem 1rem;
-    }
+  .search-bar input {
+    outline: none;
+    border: none;
+    border-radius: 1rem;
+    padding: 0.5rem 1rem;
+  }
 
-    .search-button {
-      font-weight: 700;
-      color: #fdf0d5;
-      border-radius: 5%;
-      width: 6rem;
-      background-color: rgb(253, 165, 13);
-      border: none;
-      transition: ease 200ms;
-    }
-    .search-button:hover {
-      background-color: rgb(248, 177, 55);
-    }
+  .search-button {
+    font-weight: 700;
+    color: #fdf0d5;
+    border-radius: 5%;
+    width: 6rem;
+    background-color: rgb(253, 165, 13);
+    border: none;
+    transition: ease 200ms;
+  }
 
-    main {
-      display: flex;
-      width: 100%;
-      height: 100hv;
-      padding: 0.5rem;
-      justify-content: center;
-      align-items: center;
-      overflow-y: hidden;
-    }
+  .search-button:hover {
+    background-color: rgb(248, 177, 55);
+  }
 
-    #entries {
-      display: flex;
-      flex-wrap: wrap;
-      width: 100%;
-      align-items: center;
-      justify-content: space-evenly;
-    }
+  main {
+    display: flex;
+    width: 100%;
+    height: 100hv;
+    padding: 0.5rem;
+    justify-content: center;
+    align-items: center;
+    overflow-y: hidden;
+  }
 
-    .entry {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin: 1rem 0.5rem;
-      min-width: 22rem;
-      min-height: 22rem;
-      flex-direction: column;
-      background-color: var(--color-secondary);
-      color: var(--color-contrast);
-      padding: 1rem;
-      border-radius: 1rem;
-      box-shadow: var(--drop-shadow);
-    }
+  #entries {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    align-items: center;
+    justify-content: space-evenly;
+  }
 
-    .entry img {
-      max-height: 16rem;
-      aspect-ratio: 1/1;
-    }
-  </style>
+  .entry {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 1rem 0.5rem;
+    min-width: 22rem;
+    min-height: 22rem;
+    flex-direction: column;
+    background-color: var(--color-cards);
+    color: var(--color-contrast);
+    padding: 1rem;
+    border-radius: 1rem;
+    box-shadow: var(--drop-shadow);
+  }
+
+  .entry img {
+    max-height: 16rem;
+    aspect-ratio: 1/1;
+  }
+</style>
+
 </html>
 {{ end }}

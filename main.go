@@ -38,6 +38,17 @@ func main() {
 		return c.Render(http.StatusOK, "index.html", pokedex.GetPokedex())
 	})
 
+	e.GET("/search", func(c echo.Context) error {
+		query := c.QueryParam("query")
+		data := struct {
+			PokemonEntries []pokedex.PokemonEntry
+		}{
+			PokemonEntries: pokedex.SearchPokedex(query),
+		}
+
+		return c.Render(http.StatusOK, "entries.html", data)
+	})
+
 	// GET endpoint to get a specific pokemon based on their pokedex number.
 	e.GET("/pokemon/:id", func(c echo.Context) error {
 		pokedexNumberString := c.Param("id")
@@ -53,7 +64,7 @@ func main() {
 			os.Exit(1)
 		}
 
-		return c.Render(http.StatusOK, "index.html", entry)
+		return c.Render(http.StatusOK, "entry.html", entry)
 	})
 
 	e.Logger.Fatal(e.Start(":3000"))

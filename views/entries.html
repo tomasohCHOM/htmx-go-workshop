@@ -1,0 +1,9 @@
+{{ block "entries" . }}
+  {{ range .PokemonEntries }}
+  <div class="entry">
+    <h3>{{ .PokemonSpecies.Name }}</h3>
+    <img src="https://assets.pokemon.com/assets/cms2/img/pokedex/full/{{
+    printf "%03d" .EntryNumber }}.png" alt="{{ .PokemonSpecies.Name }}" />
+  </div>
+  {{ end }}
+{{ end }}
