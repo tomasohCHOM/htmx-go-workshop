@@ -25,11 +25,12 @@
   <main>
     <div id="entries">
       {{ range .PokemonEntries }}
-      <div class="entry">
-        <h3>{{ .PokemonSpecies.Name }}</h3>
-        <img src="https://assets.pokemon.com/assets/cms2/img/pokedex/full/{{
-        printf " %03d" .EntryNumber }}.png" alt="{{ .PokemonSpecies.Name }}" />
-      </div>
+        <a href="/pokemon/{{ printf "%d" .EntryNumber }}">
+        <div class="entry">
+          <h3>{{ .PokemonSpecies.Name }}</h3>    
+            <img src="https://assets.pokemon.com/assets/cms2/img/pokedex/full/{{printf "%03d" .EntryNumber }}.png" alt="{{ .PokemonSpecies.Name }}" />
+        </div>
+      </a>
       {{ end }}
     </div>
   </main>
@@ -47,6 +48,9 @@
   h1 {
     margin: 0;
     font-size: 2.75rem;
+  }
+  a {
+    text-decoration: none;
   }
 
   *,
