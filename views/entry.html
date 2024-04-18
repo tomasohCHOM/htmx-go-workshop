@@ -5,7 +5,6 @@
     <title>{{ .PokemonSpecies.Name }}</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="css/style.css" rel="stylesheet">
   </head>
   <body>
     <header>
@@ -16,8 +15,11 @@
       </h1>
     </header>
     <main>
-      <h1>Pokemon {{ .EntryNumber }}{{ .PokemonSpecies.Name }}</h1>
-      <img src="https://assets.pokemon.com/assets/cms2/img/pokedex/full/{{printf "%03d" .EntryNumber }}.png" alt="{{ .PokemonSpecies.Name }}" />
+      <h2>Pokemon {{ .EntryNumber }}</h2>
+      <h1>{{ .PokemonSpecies.Name }}</h1>
+      <div>
+        <img src="https://assets.pokemon.com/assets/cms2/img/pokedex/full/{{printf "%03d" .EntryNumber }}.png" alt="{{ .PokemonSpecies.Name }}" />
+      </div>
     </main>
     <style>
       :root {
@@ -39,7 +41,10 @@
       *::after {
         box-sizing: border-box;
       }
-
+      a {
+        text-decoration: none;
+        color: var(--color-contrast)
+      }
       body {
         margin: 0;
         padding: 0;
@@ -62,7 +67,9 @@
         font-weight: 900;
       }
       main {
+        color: var(--color-contrast);
         display: flex;
+        flex-direction: column;
         width: 100%;
         height: 100hv;
         padding: 0.5rem;
