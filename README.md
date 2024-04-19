@@ -1,12 +1,6 @@
 # HTMX Go Example
 
-## TODO
-
-- [x] Set up server and render initial html on port 3000
-- [x] Create endpoints to get pokemon data from pokeapi.co
-- [x] Render data on the page
-- [ ] Functionality to toggle "seen" pokemons
-- [ ] Reflect updated data using HTMX helpers
+A Pokedex-inspired website created with HTMX and Go!
 
 ## Development
 
