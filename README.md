@@ -2,6 +2,8 @@
 
 A Pokedex-inspired website created with HTMX and Go!
 
+![Demo screenshot](./screenshot.png)
+
 ## Development
 
 1\. [Install Go](https://go.dev/doc/install).
