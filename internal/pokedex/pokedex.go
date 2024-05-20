@@ -36,13 +36,13 @@ func GetPokemonEntry(id int) (*PokemonEntry, error) {
 }
 
 func SearchPokedex(query string) []PokemonEntry {
-  var filtered []PokemonEntry
-  for _, entry := range pokedex.PokemonEntries {
-    if strings.Contains(entry.PokemonSpecies.Name, query) {
-      filtered = append(filtered, entry)
-    }
-  }
-  return filtered
+	var filtered []PokemonEntry
+	for _, entry := range pokedex.PokemonEntries {
+		if strings.Contains(entry.PokemonSpecies.Name, query) {
+			filtered = append(filtered, entry)
+		}
+	}
+	return filtered
 }
 
 // Pokedex is a single Pokedex.
