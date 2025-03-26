@@ -1,14 +1,14 @@
 # HTMX Go Example
 
-A Pokedex-inspired website created with HTMX and Go!
+A Pokedex-inspired website created with Go and HTMX!
 
-![Demo screenshot](./screenshot.png)
+![Landing Page](static/landing.png)
 
-## Development
+## Setup / Development
 
 1\. [Install Go](https://go.dev/doc/install).
 
-2\. Spin up the server.
+2\. Spin up the server:
 
 ```sh
 go run .
@@ -16,4 +16,4 @@ go run .
 
 ---
 
-Demonstrated with 💖 [**@acmcsufoss**](https://github.com/acmcsufoss)
+Developed with 💚 [**@acmcsufoss**](https://github.com/acmcsufoss)
