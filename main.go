@@ -1,15 +1,10 @@
 package main
 
 import (
-	"fmt"
 	"html/template"
-	"io"
+	"log"
 	"net/http"
-	"os"
 	"strconv"
-
-	"github.com/labstack/echo/v4"
-	"github.com/labstack/echo/v4/middleware"
 
 	"htmx-go-workshop/internal/pokedex"
 )
@@ -18,54 +13,59 @@ type Templates struct {
 	templates *template.Template
 }
 
-func (t *Templates) Render(w io.Writer, name string, data interface{}, c echo.Context) error {
-	return t.templates.ExecuteTemplate(w, name, data)
-}
-
 func newTemplate() *Templates {
 	return &Templates{
 		templates: template.Must(template.ParseGlob("views/*.html")),
 	}
 }
 
-func main() {
-	e := echo.New()
-	e.Use(middleware.Logger())
-	e.Renderer = newTemplate()
+func (t *Templates) render(w http.ResponseWriter, name string, data interface{}) {
+	w.Header().Set("Content-Type", "text/html; charset=utf-8")
+	if err := t.templates.ExecuteTemplate(w, name, data); err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
+}
 
-	// GET endpoint to get a list of Pokemon.
-	e.GET("/", func(c echo.Context) error {
-		return c.Render(http.StatusOK, "index.html", pokedex.GetPokedex())
+func main() {
+	tmpl := newTemplate()
+	mux := http.NewServeMux()
+
+	// GET endpoint to get a list of Pokemon
+	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		tmpl.render(w, "index.html", pokedex.GetPokedex())
 	})
 
-	e.GET("/search", func(c echo.Context) error {
-		query := c.QueryParam("query")
+	// GET endpoint to list all Pokemon that match the query
+	mux.HandleFunc("/search", func(w http.ResponseWriter, r *http.Request) {
+		query := r.URL.Query().Get("query")
 		data := struct {
 			PokemonEntries []pokedex.PokemonEntry
 		}{
 			PokemonEntries: pokedex.SearchPokedex(query),
 		}
-
-		return c.Render(http.StatusOK, "entries.html", data)
+		tmpl.render(w, "entries.html", data)
 	})
 
-	// GET endpoint to get a specific pokemon based on their pokedex number.
-	e.GET("/pokemon/:id", func(c echo.Context) error {
-		pokedexNumberString := c.Param("id")
-		pokedexNumber, err := strconv.Atoi(pokedexNumberString)
+	// GET endpoint to get a specific pokemon based on their pokedex number
+	mux.HandleFunc("/pokemon/", func(w http.ResponseWriter, r *http.Request) {
+		idStr := r.URL.Path[len("/pokemon/"):]
+		id, err := strconv.Atoi(idStr)
 		if err != nil {
-			fmt.Print(err.Error())
-			os.Exit(1)
+			http.Error(w, "Invalid Pokemon ID", http.StatusBadRequest)
+			return
 		}
-
-		entry, err := pokedex.GetPokemonEntry(pokedexNumber)
+		entry, err := pokedex.GetPokemonEntry(id)
 		if err != nil {
-			fmt.Print(err.Error())
-			os.Exit(1)
+			http.Error(w, "Pokemon not found", http.StatusNotFound)
+			return
 		}
-
-		return c.Render(http.StatusOK, "entry.html", entry)
+		tmpl.render(w, "entry.html", entry)
 	})
 
-	e.Logger.Fatal(e.Start(":3000"))
+	addr := ":3000"
+	log.Printf("Starting server at Port %s", addr)
+	err := http.ListenAndServe(addr, mux)
+	if err != nil {
+		log.Fatal(err)
+	}
 }
